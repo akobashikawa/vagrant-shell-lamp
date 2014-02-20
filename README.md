@@ -37,4 +37,4 @@ end
 * `vagrant ssh` to enter in guest
 * `vagrant suspend` to save guest snapshot
 * `vagrant halt` to shutdown guest
-* `vagrant destroy` to destroy guest if you wish start again
+* `vagrant destroy` to destroy guest if you wish to start from scratch again
