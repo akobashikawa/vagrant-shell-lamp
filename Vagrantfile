@@ -62,6 +62,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "shell" do |s|
     s.path = "shell/script.sh"
+    s.args = "host.dev mysql" # DOMAIN MYSQL_PASSWORD
   end
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
