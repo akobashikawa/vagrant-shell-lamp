@@ -28,6 +28,7 @@ config.vm.provision "shell" do |s|
   s.path = "shell/script.sh"
   s.args = "host.dev mysql" # DOMAIN MYSQL_PASSWORD
 end
+```
 
 ### Remember
 * `vagrant ssh` to enter in guest
