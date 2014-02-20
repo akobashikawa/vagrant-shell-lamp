@@ -11,7 +11,7 @@ Using shell provision for vagrant box with LAMP
 
 3. Add `192.168.33.10  host.dev` to `/etc/hosts` of host
 
-### This provide:
+### This provides a simple LAMP:
 * Apache2 webserver
   * virtual host http://host.dev
   * mod_rewrite with .htaccess support
