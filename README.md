@@ -21,6 +21,14 @@ Using shell provision for vagrant box with LAMP
 * PHPMyadmin
   * http://host.dev/phpmyadmin
 
+Virtual host domain and mysql root password are customizable in Vagrantfile:
+
+```ruby
+config.vm.provision "shell" do |s|
+  s.path = "shell/script.sh"
+  s.args = "host.dev mysql" # DOMAIN MYSQL_PASSWORD
+end
+
 ### Remember
 * `vagrant ssh` to enter in guest
 * `vagrant suspend` to save guest snapshot
