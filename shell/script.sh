@@ -58,8 +58,8 @@ apt-get -q -y install debconf-utils | tee -a /vagrant/shell/log.txt
 
 #debconf-set-selections <<< 'mysql-server mysql-server/root_password password mysql'
 #debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password mysql'
-echo 'mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}' | debconf-set-selections
-echo 'mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}' | debconf-set-selections
+echo "mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}" | debconf-set-selections
+echo "mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}" | debconf-set-selections
 
 echo "# apt-get -q -y install mysql-server libapache2-mod-auth-mysql php5-mysql" | tee -a /vagrant/shell/log.txt
 apt-get -q -y install mysql-server libapache2-mod-auth-mysql php5-mysql | tee -a /vagrant/shell/log.txt
@@ -70,11 +70,11 @@ service apache2 restart
 echo "--------------------------------------------------------------------------------" | tee -a /vagrant/shell/log.txt
 echo "[PHPMYADMIN]" | tee -a /vagrant/shell/log.txt
 
-echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/app-password-confirm password ${MYSQL_PASSWORD}' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/mysql/admin-pass password ${MYSQL_PASSWORD}' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/mysql/app-pass password ${MYSQL_PASSWORD}' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password ${MYSQL_PASSWORD}" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password ${MYSQL_PASSWORD}" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password ${MYSQL_PASSWORD}" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 
 echo "# apt-get -q -y install phpmyadmin" | tee -a /vagrant/shell/log.txt
 apt-get -q -y install phpmyadmin | tee -a /vagrant/shell/log.txt
