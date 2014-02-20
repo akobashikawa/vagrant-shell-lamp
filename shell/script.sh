@@ -22,7 +22,7 @@ echo "# apt-get update" | tee /vagrant/shell/log.txt
 apt-get update | tee -a /vagrant/shell/log.txt
 
 echo "================================================================================" | tee -a /vagrant/shell/log.txt
-echo "[APACHE]" | tee -a /vagrant/shell/log.txt
+echo "[APACHE, CURL]" | tee -a /vagrant/shell/log.txt
 echo "# apt-get -q -y install apache2 curl" | tee -a /vagrant/shell/log.txt
 apt-get -q -y install apache2 curl | tee -a /vagrant/shell/log.txt
 
@@ -78,6 +78,11 @@ echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf
 
 echo "# apt-get -q -y install phpmyadmin" | tee -a /vagrant/shell/log.txt
 apt-get -q -y install phpmyadmin | tee -a /vagrant/shell/log.txt
+
+echo "================================================================================" | tee -a /vagrant/shell/log.txt
+echo "[GIT, VIM]" | tee -a /vagrant/shell/log.txt
+echo "# apt-get -q -y install git vim" | tee -a /vagrant/shell/log.txt
+apt-get -q -y install git vim | tee -a /vagrant/shell/log.txt
 
 # REFERENCES
 # http://akcaprendiendo.blogspot.com/2014/02/vagrant-para-desarrollo-web.html
