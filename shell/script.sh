@@ -42,8 +42,6 @@ service apache2 reload
 echo "127.0.0.1 ${DOMAIN}" >> /etc/hosts
 cp /vagrant/shell/apache2-www-index.html /vagrant/www/index.html
 
-curl http://host.dev | tee -a /vagrant/shell/log.txt
-
 echo "================================================================================" | tee -a /vagrant/shell/log.txt
 echo "[PHP]" | tee -a /vagrant/shell/log.txt
 echo "# apt-get -q -y install libapache2-mod-php5" | tee -a /vagrant/shell/log.txt
