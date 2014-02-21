@@ -5,7 +5,7 @@
 # A: apache2
 # M: mysql, phpmyadmin
 # P: php5
-# Extras: curl (for http test), debconf-utils (for unattended install)
+# Extras: curl (for http test), debconf-utils (for unattended install), git, vim
 # 
 # Used with vagrant shell provision
 # data files in /vagrant/shell/ are required
