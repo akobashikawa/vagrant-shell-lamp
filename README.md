@@ -17,7 +17,7 @@ Using shell provision for vagrant box with LAMP
   * mod_rewrite with .htaccess support
   * web directory `/vagrant/www` in guest is shared as ./www in host
 * PHP5
-* MySQL5 (root password: mysql)
+* MySQL5 (root password: `mysql`)
 * PHPMyadmin
   * http://host.dev/phpmyadmin
 * curl
@@ -35,6 +35,6 @@ end
 
 ### Remember
 * `vagrant ssh` to enter in guest
-* `vagrant suspend` to save guest snapshot
-* `vagrant halt` to shutdown guest
-* `vagrant destroy` to destroy guest if you wish to start from scratch again
+* `vagrant suspend` to stop vagrant and save guest status
+* `vagrant halt` to stop vagrant and shutdown guest
+* `vagrant destroy` to stop vagrant and destroy all, if you wish start from scratch again
