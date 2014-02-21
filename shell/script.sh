@@ -12,7 +12,7 @@
 # /vagrant/shell/log.txt will be writed
 # 
 # Rulo Kobashikawa <akobashikawa@gmail.com>
-# 20140219
+# 20140219 - 20140221
 # 
 export DEBIAN_FRONTEND=noninteractive
 DOMAIN=$1
