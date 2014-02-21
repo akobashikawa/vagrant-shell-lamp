@@ -35,7 +35,7 @@ echo "[customizing apache2]" | tee -a /vagrant/shell/log.txt
 cp /vagrant/shell/apache2-conf-fqdn /etc/apache2/conf.d/fqdn
 mkdir -p /vagrant/www
 ls -ld /vagrant/www
-cp /vagrant/shell/apache2-virtualhost-development /etc/apache2/sites-available/development
+sed "/ServerName/c ServerName ${DOMAIN}" /vagrant/shell/apache2-virtualhost-development > /etc/apache2/sites-available/development
 a2ensite development | tee -a /vagrant/shell/log.txt
 a2enmod rewrite | tee -a /vagrant/shell/log.txt
 service apache2 reload
