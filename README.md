@@ -24,13 +24,12 @@ Using shell provision for vagrant box with LAMP
 * git
 * vim
 
-Virtual host domain and mysql root password are customizable in Vagrantfile:
+Virtual host domain and mysql root password are customizable in `Vagrantfile`:
 
 ```ruby
-config.vm.provision "shell" do |s|
-  s.path = "shell/script.sh"
-  s.args = "host.dev mysql" # DOMAIN MYSQL_PASSWORD
-end
+PRIVATE_NETWORK_IP = "192.168.33.10"
+VIRTUALHOST_DOMAIN = "host.dev"
+MYSQL_ROOT_PASSWORD = "mysql"
 ```
 
 ### Remember

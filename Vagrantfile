@@ -3,6 +3,9 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
+PRIVATE_NETWORK_IP = "192.168.33.10"
+VIRTUALHOST_DOMAIN = "host"
+MYSQL_ROOT_PASSWORD = "mysql"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
@@ -23,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network :private_network, ip: "192.168.33.10"
+  config.vm.network :private_network, ip: PRIVATE_NETWORK_IP
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -62,7 +65,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "shell" do |s|
     s.path = "shell/script.sh"
-    s.args = "host.dev mysql" # DOMAIN MYSQL_PASSWORD
+    s.args = PRIVATE_NETWORK_IP + " " + VIRTUALHOST_DOMAIN + " " + MYSQL_ROOT_PASSWORD
   end
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests

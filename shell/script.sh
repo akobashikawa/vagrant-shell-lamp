@@ -15,8 +15,9 @@
 # 20140219 - 20140221
 # 
 export DEBIAN_FRONTEND=noninteractive
-DOMAIN=$1
-MYSQL_PASSWORD=$2
+PRIVATE_NETWORK_IP=$1
+VIRTUALHOST_DOMAIN=$2
+MYSQL_ROOT_PASSWORD=$3
 
 echo "# apt-get update" | tee /vagrant/shell/log.txt
 apt-get update | tee -a /vagrant/shell/log.txt
@@ -35,11 +36,11 @@ echo "[customizing apache2]" | tee -a /vagrant/shell/log.txt
 cp /vagrant/shell/apache2-conf-fqdn /etc/apache2/conf.d/fqdn
 mkdir -p /vagrant/www
 ls -ld /vagrant/www
-sed "/ServerName/c ServerName ${DOMAIN}" /vagrant/shell/apache2-virtualhost-development > /etc/apache2/sites-available/development
+sed "/ServerName/c ServerName ${VIRTUALHOST_DOMAIN}" /vagrant/shell/apache2-virtualhost-development > /etc/apache2/sites-available/development
 a2ensite development | tee -a /vagrant/shell/log.txt
 a2enmod rewrite | tee -a /vagrant/shell/log.txt
 service apache2 reload
-echo "127.0.0.1 ${DOMAIN}" >> /etc/hosts
+echo "127.0.0.1 ${VIRTUALHOST_DOMAIN}" >> /etc/hosts
 cp /vagrant/shell/apache2-www-index.html /vagrant/www/index.html
 
 echo "================================================================================" | tee -a /vagrant/shell/log.txt
@@ -56,8 +57,8 @@ apt-get -q -y install debconf-utils | tee -a /vagrant/shell/log.txt
 
 #debconf-set-selections <<< 'mysql-server mysql-server/root_password password mysql'
 #debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password mysql'
-echo "mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}" | debconf-set-selections
-echo "mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}" | debconf-set-selections
+echo "mysql-server mysql-server/root_password password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
+echo "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
 
 echo "# apt-get -q -y install mysql-server libapache2-mod-auth-mysql php5-mysql" | tee -a /vagrant/shell/log.txt
 apt-get -q -y install mysql-server libapache2-mod-auth-mysql php5-mysql | tee -a /vagrant/shell/log.txt
@@ -69,9 +70,9 @@ echo "--------------------------------------------------------------------------
 echo "[PHPMYADMIN]" | tee -a /vagrant/shell/log.txt
 
 echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
-echo "phpmyadmin phpmyadmin/app-password-confirm password ${MYSQL_PASSWORD}" | debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/admin-pass password ${MYSQL_PASSWORD}" | debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass password ${MYSQL_PASSWORD}" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 
 echo "# apt-get -q -y install phpmyadmin" | tee -a /vagrant/shell/log.txt
@@ -81,6 +82,11 @@ echo "==========================================================================
 echo "[GIT, VIM]" | tee -a /vagrant/shell/log.txt
 echo "# apt-get -q -y install git vim" | tee -a /vagrant/shell/log.txt
 apt-get -q -y install git vim | tee -a /vagrant/shell/log.txt
+
+echo "================================================================================"
+echo "[READY]"
+echo "log saved in shell/log.txt"
+echo "Please remember add this to your hosts file: ${PRIVATE_NETWORK_IP} ${VIRTUALHOST_DOMAIN}"
 
 # REFERENCES
 # http://akcaprendiendo.blogspot.com/2014/02/vagrant-para-desarrollo-web.html
