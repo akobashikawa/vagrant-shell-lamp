@@ -4,7 +4,7 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 PRIVATE_NETWORK_IP = "192.168.33.10"
-VIRTUALHOST_DOMAIN = "host"
+VIRTUALHOST_DOMAIN = "host.dev"
 MYSQL_ROOT_PASSWORD = "mysql"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
