@@ -18,6 +18,7 @@ Using shell provision for vagrant box with LAMP
   * web directory `/vagrant/www` in guest is shared as ./www in host
 * PHP5
 * MySQL5 (root password: `mysql`)
+* Exim4 for email sending
 * PHPMyadmin
   * http://host.dev/phpmyadmin
 * curl
@@ -28,7 +29,8 @@ Virtual host domain and mysql root password are customizable in `Vagrantfile`:
 
 ```ruby
 PRIVATE_NETWORK_IP = "192.168.33.10"
-VIRTUALHOST_DOMAIN = "host.dev"
+HOSTNAME = "precise32"
+VIRTUALHOST_DOMAIN = "precise32.dev"
 MYSQL_ROOT_PASSWORD = "mysql"
 ```
 

@@ -16,8 +16,9 @@
 # 
 export DEBIAN_FRONTEND=noninteractive
 PRIVATE_NETWORK_IP=$1
-VIRTUALHOST_DOMAIN=$2
-MYSQL_ROOT_PASSWORD=$3
+HOSTNAME=$2
+VIRTUALHOST_DOMAIN=$3
+MYSQL_ROOT_PASSWORD=$4
 
 echo "# apt-get update" | tee /vagrant/shell/log.txt
 apt-get update | tee -a /vagrant/shell/log.txt
@@ -40,7 +41,7 @@ sed "/ServerName/c ServerName ${VIRTUALHOST_DOMAIN}" /vagrant/shell/apache2-virt
 a2ensite development | tee -a /vagrant/shell/log.txt
 a2enmod rewrite | tee -a /vagrant/shell/log.txt
 service apache2 reload
-echo "127.0.0.1 ${VIRTUALHOST_DOMAIN}" >> /etc/hosts
+echo "127.0.0.1 ${HOSTNAME} ${VIRTUALHOST_DOMAIN}" >> /etc/hosts
 cp /vagrant/shell/apache2-www-index.html /vagrant/www/index.html
 
 echo "================================================================================" | tee -a /vagrant/shell/log.txt
@@ -66,6 +67,25 @@ apt-get -q -y install mysql-server libapache2-mod-auth-mysql php5-mysql | tee -a
 
 service apache2 restart
 
+echo "================================================================================" | tee -a /vagrant/shell/log.txt
+echo "[Exim Mail]" | tee -a /vagrant/shell/log.txt
+
+echo "exim4-config	exim4/dc_other_hostnames	string	${HOSTNAME}.dev; ${HOSTNAME}; localhost.localdomain; localhost" | debconf-set-selections
+echo "exim4-config	exim4/dc_eximconfig_configtype	select	internet site; mail is sent and received directly using SMTP" | debconf-set-selections
+echo "exim4-config	exim4/no_config	boolean	true" | debconf-set-selections
+echo "exim4-config	exim4/dc_postmaster	string	vagrant" | debconf-set-selections
+echo "exim4-config	exim4/dc_smarthost	string" | debconf-set-selections
+echo "exim4-config	exim4/dc_relay_domains	string" | debconf-set-selections
+echo "exim4-config	exim4/dc_relay_nets	string" | debconf-set-selections
+echo "exim4-config	exim4/mailname	string	${HOSTNAME}.dev" | debconf-set-selections
+echo "exim4-config	exim4/use_split_config	boolean	false" | debconf-set-selections
+echo "exim4-config	exim4/dc_localdelivery	select	Maildir format in home directory" | debconf-set-selections
+echo "exim4-config	exim4/dc_local_interfaces	string	127.0.0.1 ; ::1" | debconf-set-selections
+echo "exim4-config	exim4/dc_minimaldns	boolean	false" | debconf-set-selections
+
+echo "# apt-get -q -y install exim4-daemon-light mailutils" | tee -a /vagrant/shell/log.txt
+apt-get -q -y install exim4-daemon-light mailutils | tee -a /vagrant/shell/log.txt
+
 echo "--------------------------------------------------------------------------------" | tee -a /vagrant/shell/log.txt
 echo "[PHPMYADMIN]" | tee -a /vagrant/shell/log.txt
 
@@ -87,6 +107,7 @@ echo "==========================================================================
 echo "[READY]"
 echo "log saved in shell/log.txt"
 echo "Please remember add this to your hosts file: ${PRIVATE_NETWORK_IP} ${VIRTUALHOST_DOMAIN}"
+echo "To test email send: echo \"This is a test.\" | mail -s Testing someone@somedomain.com"
 
 # REFERENCES
 # http://akcaprendiendo.blogspot.com/2014/02/vagrant-para-desarrollo-web.html

@@ -57,7 +57,7 @@
 		<h1>Remember</h1>
 		<ul>
 			<li>
-				Change to folder where <code>Vagrantfile</code> is:
+				Change to folder where <code>Vagrantfile</code> is, and use:
 				<ul>
 					<li><code>vagrant ssh</code> to enter in guest</li>
 					<li><code>vagrant suspend</code> to stop vagrant and save guest status</li>
@@ -65,6 +65,12 @@
 					<li><code>vagrant up</code> to start vagrant</li>
 					<li><code>vagrant destroy</code> to stop vagrant and destroy all, if you wish start from scratch again</li>
 				</ul>
+			</li>
+			<li>
+				To test mail:
+				<pre>
+					echo "This is a test." | mail -s Testing someone@somedomain.com
+				</pre>
 			</li>
 			<li>
 				Web folder is shared:
